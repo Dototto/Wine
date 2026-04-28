@@ -218,6 +218,7 @@ Prima dell'addestramento, sono state effettuate le seguenti analisi:
 *   **Gestione Valori Mancanti:** Verifica della presenza di dati nulli all'interno delle feature per garantire l'integrità del dataset.
 *   **Analisi di Correlazione:** Generazione di una **Heatmap** per visualizzare la correlazione di Pearson tra le diverse caratteristiche (lunghezza/larghezza di sepali e petali).
 *   **Rimozioni feature altamente correlate:** Droppare una delle due feature con un valore assoluto di correlazione superiore a una certa soglia per evitare la multicollinearità.
+<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/7dabc2b2-b214-4a9f-b3c8-1040cd2fa5da" />
 
 ---
 
