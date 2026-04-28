@@ -1,3 +1,5 @@
+import os
+
 import joblib
 from matplotlib import pyplot as plt
 from sklearn.linear_model import LogisticRegression
@@ -7,58 +9,73 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
-
-from modello import data_handler
 from modello.data_handler import DataHandler
 
-def plot_confusion_matrix_cv(model, X, y, title, cv=5):
-    y_pred_cv = cross_val_predict(
-        model,
-        X,
-        y,
-        cv=cv
-    )
+def plot_confusion_matrix_cv(model, X, y, title, filename, cv=5, show=False):
+    os.makedirs("risultati", exist_ok=True)
 
+    y_pred_cv = cross_val_predict(model, X, y, cv=cv)
     cm = confusion_matrix(y, y_pred_cv)
 
     class_names = ["class_0", "class_1", "class_2"]
 
-    plt.figure(figsize=(6, 5))
+    fig, ax = plt.subplots(figsize=(6, 5))
+
     sns.heatmap(
         cm,
         annot=True,
         fmt="d",
         cmap="Blues",
         xticklabels=class_names,
-        yticklabels=class_names
+        yticklabels=class_names,
+        ax=ax
     )
 
-    plt.xlabel("Predicted")
-    plt.ylabel("Actual")
-    plt.title(title)
-    plt.tight_layout()
-    plt.show()
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
+    ax.set_title(title)
 
-def plot_confusion_matrix(y_true, y_pred, title):
+    fig.tight_layout()
+
+    path = f"risultati/{filename}"
+    fig.savefig(path, dpi=300, bbox_inches="tight")
+
+    if show:
+        plt.show()
+
+    plt.close(fig)
+
+def plot_confusion_matrix(y_true, y_pred, title, filename, show=False):
+    os.makedirs("risultati", exist_ok=True)
+
     cm = confusion_matrix(y_true, y_pred)
-
     class_names = ["class_0", "class_1", "class_2"]
 
-    plt.figure(figsize=(6, 5))
+    fig, ax = plt.subplots(figsize=(6, 5))
+
     sns.heatmap(
         cm,
         annot=True,
         fmt="d",
         cmap="Blues",
         xticklabels=class_names,
-        yticklabels=class_names
+        yticklabels=class_names,
+        ax=ax
     )
 
-    plt.xlabel("Predicted")
-    plt.ylabel("Actual")
-    plt.title(title)
-    plt.tight_layout()
-    plt.show()
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
+    ax.set_title(title)
+
+    fig.tight_layout()
+
+    path = f"risultati/{filename}"
+    fig.savefig(path, dpi=300, bbox_inches="tight")
+
+    if show:
+        plt.show()
+
+    plt.close(fig)
 
 def run_cross_validation(X, y, cv=5):
     pipeline = Pipeline([
@@ -86,6 +103,7 @@ def run_cross_validation(X, y, cv=5):
         X,
         y,
         "Confusion Matrix CV - Logistic Regression",
+        "cm_cv_lr.png",
         cv=cv
     )
 
@@ -124,6 +142,7 @@ def run_cross_validation_knn(X, y, cv=5):
         X,
         y,
         "Confusion Matrix CV - KNN",
+        "cm_cv_knn.png",
         cv=cv
     )
 
@@ -172,7 +191,8 @@ def main():
     plot_confusion_matrix(
         y_test,
         test_data_prediction,
-        "Confusion Matrix - Logistic Regression"
+        "Confusion Matrix - Logistic Regression",
+        "cm_lr.png"
     )
 
     ##########
@@ -190,7 +210,8 @@ def main():
     plot_confusion_matrix(
         y_test,
         test_data_predictionKNN,
-        "Confusion Matrix - KNN"
+        "Confusion Matrix - KNN",
+        "cm_knn.png"
     )
 
     joblib.dump(model, "wine_model.pkl")
