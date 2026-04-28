@@ -301,7 +301,6 @@ POST /predict
   "ash": 2.4,
   "alcalinity_of_ash": 18.0,
   "magnesium": 105,
-  "total_phenols": 2.7,
   "flavanoids": 2.9,
   "nonflavanoid_phenols": 0.3,
   "proanthocyanins": 1.8,
