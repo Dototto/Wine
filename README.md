@@ -313,7 +313,7 @@ POST /predict
   "proanthocyanins": 1.8,
   "color_intensity": 5.2,
   "hue": 1.0,
-  "od280/od315_of_diluted_wines": 3.1,
+  "od280_od315_of_diluted_wines": 3.1,
   "proline": 950
 }
 ```
@@ -321,8 +321,8 @@ POST /predict
 ### Esempio risposta:
 ```json
 {
-  "prediction_logistic": "Class 0",
-  "prediction_knn": "Class 0"
+  "prediction_logistic_regression": "class_0",
+  "prediction_knn": "class_0"
 }
 ```
 
