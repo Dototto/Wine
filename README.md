@@ -156,6 +156,9 @@ Questo repository contiene una panoramica teorica e pratica su due dei principal
 La Regressione Logistica Multinomiale è un'estensione della regressione logistica binaria, progettata per prevedere la probabilità di appartenenza di un input a una tra **tre o più classi** distinte.
 
 ### Teoria
+A differenza del caso binario (dove si usa la funzione Sigmoide), questo modello utilizza la funzione **Softmax**. Per ogni classe $j$, il modello calcola un punteggio lineare; la funzione Softmax trasforma poi questi punteggi in probabilità:
+
+### Teoria
 
 $$
 P(y=j|\mathbf{x}) = \frac{e^{\mathbf{w}_j^T \mathbf{x}}}{\sum_{k=1}^{K} e^{\mathbf{w}_k^T \mathbf{x}}}
@@ -184,23 +187,19 @@ Il risultato è un vettore di probabilità la cui somma è sempre pari a 1 (100%
 
 ## 2. k-Nearest Neighbors (k-NN)
 
-Il k-NN è un algoritmo **non parametrico** basato sulla vicinanza geometrica tra osservazioni.
+Il k-NN è un algoritmo di tipo **non parametrico** e **lazy learning** (apprendimento pigro). Non costruisce un modello matematico esplicito durante l'addestramento, ma memorizza semplicemente i dati di training.
 
-### Funzionamento
+### Teoria
+Il principio cardine è la **similitudine geometrica**. Quando riceve un nuovo punto da classificare:
+1. Calcola la **distanza** (solitamente Euclidea) tra il nuovo punto e tutti quelli presenti nel set di addestramento.
+2. Individua i **$k$ punti più vicini**.
+3. Assegna la classe basandosi sulla **maggioranza** (voto ponderato o semplice) tra i $k$ vicini.
 
-1. Calcola la distanza dal nuovo punto ai campioni del training set  
-2. Seleziona i **k vicini più prossimi**  
-3. Restituisce la classe più frequente  
+<img width="591" height="515" alt="image" src="https://github.com/user-attachments/assets/215e426e-d671-410d-9995-6c46f5c26b8c" />
 
-### Punti di forza
 
-* Semplice  
-* Adatto a pattern non lineari  
-
-### Limiti
-
-* Più lento in prediction  
-* Sensibile alla scala delle feature  
+*   **Punti di forza:** Estremamente semplice da implementare, si adatta a decision boundary molto complessi e non lineari.
+*   **Punti di debolezza:** Molto costoso in termini computazionali durante la fase di test (lento con dataset grandi) e sensibile alla scala delle caratteristiche (richiede normalizzazione).
 
 ---
 
