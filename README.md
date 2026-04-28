@@ -185,6 +185,7 @@ POST /predict
 ```
 
 ### Esempio richiesta:
+```json
 {
   "alcohol": 13.5,
   "malic_acid": 2.1,
@@ -200,12 +201,15 @@ POST /predict
   "od280/od315_of_diluted_wines": 3.1,
   "proline": 950
 }
+```
 
 ### Esempio risposta:
+```json
 {
   "prediction_logistic": "Class 0",
   "prediction_knn": "Class 0"
 }
+```
 
 ---
 
