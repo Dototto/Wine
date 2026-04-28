@@ -24,8 +24,7 @@ class DataHandler:
         self.__data = pd.DataFrame(wine.data, columns=wine.feature_names)
         self.__data["target"] = wine.target
 
-        self.__X = self.__data.drop(columns=["target", "total_phenols"])
-        self.__y = self.__data["target"]
+
 
 
     def show_info(self):
@@ -38,9 +37,13 @@ class DataHandler:
         print("\nValori mancanti:")
         print(self.__data.isnull().sum())
 
-    def clean_data(self):
-        # Rimozione duplicati
-        print("duplicati", self.__data.duplicated().sum())
+        print("\nDuplicati:")
+        print(self.__data.duplicated().sum())
+
+    def drop_data(self):
+        self.__X = self.__data.drop(columns=["target", "total_phenols"])
+        self.__y = self.__data["target"]
+
 
 
     def plot_correlation_heatmap(self, figsize=(10, 8), threshold = 0.75, annot=False, cmap="coolwarm"):

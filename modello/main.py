@@ -1,12 +1,64 @@
 import joblib
+from matplotlib import pyplot as plt
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, accuracy_score
-from sklearn.model_selection import cross_val_score, cross_validate
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+from sklearn.model_selection import cross_val_score, cross_validate, cross_val_predict
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+import seaborn as sns
 
+from modello import data_handler
 from modello.data_handler import DataHandler
+
+def plot_confusion_matrix_cv(model, X, y, title, cv=5):
+    y_pred_cv = cross_val_predict(
+        model,
+        X,
+        y,
+        cv=cv
+    )
+
+    cm = confusion_matrix(y, y_pred_cv)
+
+    class_names = ["class_0", "class_1", "class_2"]
+
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=class_names,
+        yticklabels=class_names
+    )
+
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title(title)
+    plt.tight_layout()
+    plt.show()
+
+def plot_confusion_matrix(y_true, y_pred, title):
+    cm = confusion_matrix(y_true, y_pred)
+
+    class_names = ["class_0", "class_1", "class_2"]
+
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=class_names,
+        yticklabels=class_names
+    )
+
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title(title)
+    plt.tight_layout()
+    plt.show()
 
 def run_cross_validation(X, y, cv=5):
     pipeline = Pipeline([
@@ -27,6 +79,14 @@ def run_cross_validation(X, y, cv=5):
         y,
         cv=cv,
         scoring=scoring
+    )
+
+    plot_confusion_matrix_cv(
+        pipeline,
+        X,
+        y,
+        "Confusion Matrix CV - Logistic Regression",
+        cv=cv
     )
 
     print("\n=== CROSS VALIDATION LOGISTIC REGRESSION ===")
@@ -59,6 +119,14 @@ def run_cross_validation_knn(X, y, cv=5):
         scoring=scoring
     )
 
+    plot_confusion_matrix_cv(
+        pipeline,
+        X,
+        y,
+        "Confusion Matrix CV - KNN",
+        cv=cv
+    )
+
     print("\n=== CROSS VALIDATION KNN ===")
 
     for metric in scoring.keys():
@@ -77,7 +145,7 @@ def main():
     data_handler.show_info()
 
     # Pulizia e preprocessing
-    #data_handler.clean_data()
+    data_handler.drop_data()
     data_handler.plot_correlation_heatmap()
     data_handler.split_data(test_size=0.2)
     data_handler.scale_data()
@@ -101,6 +169,12 @@ def main():
     # Cross-validation su tutto il dataset
     run_cross_validation(data_handler.get_X(), data_handler.get_y(), cv=5)
 
+    plot_confusion_matrix(
+        y_test,
+        test_data_prediction,
+        "Confusion Matrix - Logistic Regression"
+    )
+
     ##########
     modelKNN = KNeighborsClassifier(n_neighbors=11)
     modelKNN.fit(X_train, y_train)
@@ -112,6 +186,12 @@ def main():
     print(f"TEST KNN:\n{classification_report(y_test, test_data_predictionKNN)}")
 
     run_cross_validation_knn(data_handler.get_X(), data_handler.get_y(), cv=5)
+
+    plot_confusion_matrix(
+        y_test,
+        test_data_predictionKNN,
+        "Confusion Matrix - KNN"
+    )
 
     joblib.dump(model, "wine_model.pkl")
     joblib.dump(modelKNN, "wine_modelKNN.pkl")
