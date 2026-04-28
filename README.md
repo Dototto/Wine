@@ -130,7 +130,7 @@ Sono stati implementati e confrontati due classificatori:
 #### B. k-Nearest Neighbors (k-NN)
 *   **Parametri:** Impostato con **$k = 11$**.
 *   **Motivazione della scelta:** 
-    1.  **Regola della Radice Quadrata:** Una pratica comune (euristica) consiste nello scegliere $k \approx \sqrt{n}$, dove $n$ è il numero di campioni nel training set. Con 120 campioni (80% di 150), $\sqrt{120} \approx 10.95$, da cui il valore 11.
+    1.  **Regola della Radice Quadrata:** Una pratica comune (euristica) consiste nello scegliere $k \approx \sqrt{n}$, dove $n$ è il numero di campioni nel training set. Con 142 campioni (80% di 178), $\sqrt{142} \approx 11.91$, da cui il valore 11.
     2.  **Valore Dispari:** Si è scelto un numero dispari per evitare situazioni di "pareggio" (tie) durante la votazione delle classi, garantendo che ci sia sempre una classe di maggioranza netta.
 *   **Logica:** La classificazione avviene in base alla classe di maggioranza degli 11 campioni più vicini nel set di training.
 
