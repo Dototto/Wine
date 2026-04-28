@@ -94,3 +94,6 @@ class DataHandler:
 
     def get_y(self):
         return self.__y
+
+    def get_scaler(self):
+        return self.__scaler

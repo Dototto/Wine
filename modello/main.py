@@ -1,3 +1,4 @@
+import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.model_selection import cross_val_score, cross_validate
@@ -111,6 +112,11 @@ def main():
     print(f"TEST KNN:\n{classification_report(y_test, test_data_predictionKNN)}")
 
     run_cross_validation_knn(data_handler.get_X(), data_handler.get_y(), cv=5)
+
+    joblib.dump(model, "wine_model.pkl")
+    joblib.dump(modelKNN, "wine_modelKNN.pkl")
+    joblib.dump(data_handler.get_X().columns.tolist(), "model_columns.pkl")
+    joblib.dump(data_handler.get_scaler(), 'scaler.pkl')
 
 
 
