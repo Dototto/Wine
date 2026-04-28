@@ -10,7 +10,7 @@ from modello.data_handler import DataHandler
 def run_cross_validation(X, y, cv=5):
     pipeline = Pipeline([
         ("scaler", StandardScaler()),
-        ("model", LogisticRegression(max_iter=1000))
+        ("model", LogisticRegression(max_iter=1000, solver='lbfgs'))
     ])
 
     scoring = {
@@ -98,8 +98,7 @@ def main():
     print(f"TEST Regressione Logistica:\n{classification_report(y_test, test_data_prediction)}")
 
     # Cross-validation su tutto il dataset
-    run_cross_validation(data_handler.X, data_handler.y, cv=5)
-    run_cross_validation_knn(data_handler.X, data_handler.y, cv=5)
+    run_cross_validation(data_handler.get_X(), data_handler.get_y(), cv=5)
 
     ##########
     modelKNN = KNeighborsClassifier(n_neighbors=11)
@@ -110,6 +109,8 @@ def main():
 
     print(f"TRAIN KNN:\n{classification_report(y_train, training_data_predictionKNN)}")
     print(f"TEST KNN:\n{classification_report(y_test, test_data_predictionKNN)}")
+
+    run_cross_validation_knn(data_handler.get_X(), data_handler.get_y(), cv=5)
 
 
 
