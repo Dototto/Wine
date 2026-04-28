@@ -9,7 +9,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
-from modello.data_handler import DataHandler
+from data_handler import DataHandler
 
 def plot_confusion_matrix_cv(model, X, y, title, filename, cv=5, show=False):
     os.makedirs("risultati", exist_ok=True)
