@@ -233,7 +233,7 @@ Sono stati implementati e confrontati due classificatori:
 
 #### A. Regressione Logistica (Multinomiale)
 *   **Configurazione:** È stato utilizzato il solver `lbfgs` (*Limited-memory Broyden–Fletcher–Goldfarb–Shanno*).
-*   **Motivazione:** È l'algoritmo di ottimizzazione predefinito in Scikit-Learn per problemi di piccole e medie dimensioni. È stato scelto perché supporta nativamente la perdita multinomiale (Cross-Entropy) ed è molto efficiente nel gestire dataset con poche osservazioni come Iris, garantendo una convergenza rapida rispetto ad altri solver come `liblinear`.
+*   **Motivazione:** È l'algoritmo di ottimizzazione predefinito in Scikit-Learn per problemi di piccole e medie dimensioni. È stato scelto perché supporta nativamente la perdita multinomiale (Cross-Entropy) ed è molto efficiente nel gestire dataset con poche osservazioni, garantendo una convergenza rapida rispetto ad altri solver come `liblinear`.
 *   **Logica:** Il modello gestisce intrinsecamente la classificazione multi-classe calcolando le probabilità per le tre specie di Iris.
 
 #### B. k-Nearest Neighbors (k-NN)
