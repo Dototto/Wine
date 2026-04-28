@@ -222,7 +222,7 @@ Il principio cardine è la **similitudine geometrica**. Quando riceve un nuovo p
 ### 1. Analisi Esplorativa (EDA)
 Prima dell'addestramento, sono state effettuate le seguenti analisi:
 *   **Gestione Valori Mancanti:** Verifica della presenza di dati nulli all'interno delle feature per garantire l'integrità del dataset.
-*   **Analisi di Correlazione:** Generazione di una **Heatmap** per visualizzare la correlazione di Pearson tra le diverse caratteristiche (lunghezza/larghezza di sepali e petali).
+*   **Analisi di Correlazione:** Generazione di una **Heatmap** per visualizzare la correlazione di Pearson tra le diverse caratteristiche chimiche del vino.
 *   **Rimozioni feature altamente correlate:** Droppare una delle due feature con un valore assoluto di correlazione superiore a una certa soglia per evitare la multicollinearità.
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/7dabc2b2-b214-4a9f-b3c8-1040cd2fa5da" />
 
@@ -241,7 +241,7 @@ Sono stati implementati e confrontati due classificatori:
 #### A. Regressione Logistica (Multinomiale)
 *   **Configurazione:** È stato utilizzato il solver `lbfgs` (*Limited-memory Broyden–Fletcher–Goldfarb–Shanno*).
 *   **Motivazione:** È l'algoritmo di ottimizzazione predefinito in Scikit-Learn per problemi di piccole e medie dimensioni. È stato scelto perché supporta nativamente la perdita multinomiale (Cross-Entropy) ed è molto efficiente nel gestire dataset con poche osservazioni, garantendo una convergenza rapida rispetto ad altri solver come `liblinear`.
-*   **Logica:** Il modello gestisce intrinsecamente la classificazione multi-classe calcolando le probabilità per le tre specie di Iris.
+*   **Logica:** Il modello gestisce intrinsecamente la classificazione multi-classe calcolando le probabilità per le tre classi di vino.
 
 #### B. k-Nearest Neighbors (k-NN)
 *   **Parametri:** Impostato con **$k = 11$**.
