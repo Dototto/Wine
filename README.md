@@ -167,11 +167,18 @@ Dove:
 * **$\mathbf{w}_j$** sono i pesi della classe $j$  
 * **$K=3$** è il numero di classi  
 
-### Punti di forza
+Per comprendere come il modello giunga alla classificazione, analizziamo i simboli utilizzati:
 
-* Fornisce probabilità di classificazione  
-* Rapida in training e prediction  
-* Interpretabile  
+*   **$P(y=j | \mathbf{x})$**: Rappresenta la **probabilità condizionata**. È la probabilità che il campione appartenga alla classe $j$ (es. "Iris Setosa"), date le sue caratteristiche misurate $\mathbf{x}$.
+*   **$\mathbf{x}$**: È il **vettore delle caratteristiche** (input). Nel caso del dataset Iris, contiene i quattro valori: *sepal length, sepal width, petal length, petal width*.
+*   **$\mathbf{w}_j$**: Rappresenta il **vettore dei pesi** (o coefficienti) che il modello ha imparato specificamente per la classe $j$. Ogni classe ha il suo set di pesi.
+*   **$\mathbf{w}_j^T \mathbf{x}$**: È il **prodotto scalare** tra pesi e caratteristiche. Rappresenta il "punteggio grezzo" (chiamato *Logit*) assegnato alla classe $j$. Più alto è questo valore, più il modello "crede" che il campione appartenga a quella classe.
+*   **$e$**: È la costante di Nepero (circa 2.718). Elevare $e$ al punteggio garantisce che il risultato sia sempre un **numero positivo** e accentua lo stacco tra la classe dominante e le altre.
+*   **$\sum_{k=1}^{K}$**: Rappresenta la **sommatoria** calcolata su tutte le classi possibili ($K=3$ nel dataset Iris). Dividere per questa somma serve a **normalizzare** i risultati, facendo sì che la somma di tutte le probabilità finali sia esattamente 1 (o 100%).
+
+Il risultato è un vettore di probabilità la cui somma è sempre pari a 1 (100%).
+
+*   **Punti di forza:** Fornisce probabilità di classificazione, è veloce da addestrare e facile da interpretare (tramite i coefficienti). 
 
 ---
 
