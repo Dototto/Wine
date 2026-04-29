@@ -214,6 +214,27 @@ Il principio cardine è la **similitudine geometrica**. Quando riceve un nuovo p
 | **Outlier** | Robusta | Molto sensibile |
 
 ---
+## Cross Validation dei Modelli
+
+Per valutare la robustezza dei modelli è stata applicata la **K-Fold Cross Validation** con **cv = 5**.
+
+### Cos'è la Cross Validation
+
+Il dataset viene suddiviso in 5 blocchi:
+
+* ad ogni iterazione, 4 blocchi vengono usati per il training  
+* 1 blocco viene usato per il test  
+* il processo viene ripetuto 5 volte cambiando il blocco di validazione  
+
+In questo modo ogni osservazione viene usata sia per training che per validazione.
+
+### Vantaggi
+
+* stima più affidabile delle performance  
+* minore dipendenza da un singolo train/test split  
+* migliore controllo dell'overfitting  
+* confronto più stabile tra modelli
+---
 
 # Descrizione del Processo
 
@@ -247,32 +268,13 @@ Sono stati implementati e confrontati due classificatori:
 *   **Parametri:** Impostato con **$k = 11$**.
 *   **Motivazione della scelta:** 
     1.  **Regola della Radice Quadrata:** Una pratica comune (euristica) consiste nello scegliere $k \approx \sqrt{n}$, dove $n$ è il numero di campioni nel training set. Con 142 campioni (80% di 178), $\sqrt{142} \approx 11.91$, da cui il valore 11.
-    2.  **Valore Dispari:** Si è scelto un numero dispari per evitare situazioni di "pareggio" (tie) durante la votazione delle classi, garantendo che ci sia sempre una classe di maggioranza netta.
+    2.  **Valore Dispari:** Si è scelto un numero dispari non multiplo di 3 (numero classi) per evitare situazioni di "pareggio" (tie) perfetto durante la votazione delle classi, garantendo una maggiore possibilità che ci sia sempre una classe di maggioranza netta.
+    3.  **Verifica tramite Cross-Validation (CV):** Per garantire la solidità del modello, è stata eseguita una **K-Fold Cross-Validation** (con $k=5$). 
+        *   **Perché è stata usata:** A differenza di un singolo test, la CV assicura che le performance siano stabili e non dipendano da una divisione fortunata dei dati.
+        *   **Risultato:** La CV ha confermato che con $k=11$ il modello mantiene una bassa deviazione standard e un'alta precisione media, validando empiricamente la scelta teorica iniziale.
 *   **Logica:** La classificazione avviene in base alla classe di maggioranza degli 11 campioni più vicini nel set di training.
 
 ---
-
-## 4. Cross Validation dei Modelli
-
-Per valutare la robustezza dei modelli è stata applicata la **K-Fold Cross Validation** con **cv = 5**.
-
-### Cos'è la Cross Validation
-
-Il dataset viene suddiviso in 5 blocchi:
-
-* ad ogni iterazione, 4 blocchi vengono usati per il training  
-* 1 blocco viene usato per il test  
-* il processo viene ripetuto 5 volte cambiando il blocco di validazione  
-
-In questo modo ogni osservazione viene usata sia per training che per validazione.
-
-### Vantaggi
-
-* stima più affidabile delle performance  
-* minore dipendenza da un singolo train/test split  
-* migliore controllo dell'overfitting  
-* confronto più stabile tra modelli
-
 
 ## Risultati
 I modelli vengono valutati in base a:
